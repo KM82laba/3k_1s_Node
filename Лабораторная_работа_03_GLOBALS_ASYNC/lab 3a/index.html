@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3</title>
+</head>
+<body>
+  <h1>t-k/fact</h1>
+  <div id="results"></div>
+  <script>
+    // Цикл для выполнения GET-запросов и вывода результатов
+    async function fetchData() {
+      const resultsDiv = document.getElementById('results');
+      let startTime = Date.now();
+
+      for (let x = 1; x <= 20; x++) {
+        const response = await fetch(`http://localhost:5000/fact?k=${x}`);
+        const data = await response.json();
+        const elapsedTime = Date.now() - startTime;
+        const resultString = `${elapsedTime} - ${data.k}/${data.fact}`;
+
+        const resultElement = document.createElement('p');
+        resultElement.textContent = resultString;
+        resultsDiv.appendChild(resultElement);
+      }
+    }
+    
+    // Вызов функции при загрузке страницы
+    fetchData();
+  </script>
+</body>
+</html>

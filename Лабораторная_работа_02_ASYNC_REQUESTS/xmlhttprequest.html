@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>XMLHttpRequest Example</title>
+</head>
+<body>
+  <h1>XMLHttpRequest Example</h1>
+  <div id="nameInfo">Загрузка...</div>
+
+  <script>
+    const nameInfo = document.getElementById('nameInfo');
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://localhost:5000/api/name', true);
+        xhr.send();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        nameInfo.textContent = `${xhr.responseText} `;
+      }
+    };
+  </script>
+</body>
+</html>

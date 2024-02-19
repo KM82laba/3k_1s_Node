@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fetch Example</title>
+</head>
+<body>
+  <h1>Fetch Example</h1>
+  <div id="nameInfo">Загрузка...</div>
+  <script>
+    const nameInfo = document.getElementById('nameInfo');
+    fetch('http://localhost:5000/api/name')
+      .then(response => response.text())
+      .then(data => {
+        nameInfo.textContent = `${data}`;
+      })
+      .catch(error => {
+        nameInfo.textContent = 'Ошибка при получении данных';
+        console.error(error);
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>jQuery Example</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>jQuery Example</h1>
+  <div id="nameInfo">Загрузка...</div>
+
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+        url: 'http://localhost:5000/api/name',
+        method: 'GET',
+        success: function(data) {
+          $('#nameInfo').text(data);
+        },
+        error: function() {
+          $('#nameInfo').text('Ошибка при получении данных');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index</title>
+</head>
+<body>
+    
+    <label for="nameInput">Имя:</label>
+    <input type="text" id="nameInput" name="nameInput" required>
+
+    <label for="bdayInput">Дата:</label>
+    <input type="text" id="bdayInput" name="bdayInput" required>
+
+    <label for="idInput">ID:</label>
+    <input type="text" id="idInput" name="idInput">
+
+    <button type="button" onclick="sendRequest('GET')">GET</button>
+    <button type="button" onclick="sendRequest('POST')">POST</button>
+    <button type="button" onclick="sendRequest('PUT')">PUT</button>
+    <button type="button" onclick="sendRequest('DELETE')">DELETE</button>
+
+    <div id="result"></div>
+
+  <script>
+    function sendRequest(method) {
+      const nameInput = document.getElementById('nameInput').value;
+      const bdayInput = document.getElementById('bdayInput').value;
+      const idInput = document.getElementById('idInput').value;
+
+      let url = `http://localhost:5000/api/db`;
+      if (idInput) {
+        url += `?id=${idInput}`;
+      }
+      fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        ...(method !== 'GET' && { body: JSON.stringify({ name: nameInput, bday: bdayInput }) }), //проверка для GET-запроса без body
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          const resultDiv = document.getElementById('result');
+          resultDiv.innerHTML += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        } else {
+          document.getElementById('result').innerHTML = JSON.stringify(data);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+</body>
+</html>
